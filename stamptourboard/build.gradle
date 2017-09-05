@@ -1,0 +1,119 @@
+apply plugin: 'com.android.library'
+
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:1.1.0'
+    }
+}
+
+ext {
+    bintrayRepo = 'maven' // your repo name
+    bintrayName = 'stamptourboard' // has to be same as your library module name
+    publishedGroupId = 'com.thatzit.oib.stamptourboard' // your module package name
+    libraryName = 'stamptourboard'
+    artifact = 'stamptourboard' // has to be same as your library module name
+    libraryDescription = 'Stamp Tour Board module'
+    siteUrl = 'https://github.com/inbum/StampTourBoard'
+    gitUrl = 'https://github.com/inbum/StampTourBoard.git'
+    libraryVersion = '1.0'
+    developerId = 'inbum'
+    developerName = 'inbumo'
+    developerEmail = 'inbum.o@gmail.com'
+    licenseName = 'The Apache Software License, Version 2.0'
+    licenseUrl = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
+    allLicenses = ["Apache-2.0"]
+}
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.3"
+
+    defaultConfig {
+        minSdkVersion 16
+        targetSdkVersion 24
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+    }
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+    }
+
+    lintOptions {
+        // set to true to turn off analysis progress reporting by lint
+        quiet true
+        // if true, stop the gradle build if errors are found
+        abortOnError false
+        // if true, only report errors
+        ignoreWarnings true
+        // if true, emit full/absolute paths to files with errors (true by default)
+        //absolutePaths true
+        // if true, check all issues, including those that are off by default
+        checkAllWarnings true
+        // if true, treat all warnings as errors
+        warningsAsErrors true
+        // turn off checking the given issue id's
+        disable 'TypographyFractions','TypographyQuotes'
+        // turn on the given issue id's
+        enable 'RtlHardcoded','RtlCompat', 'RtlEnabled'
+        // check *only* the given issue id's
+        check 'NewApi', 'InlinedApi'
+        // if true, don't include source code lines in the error output
+        noLines true
+        // if true, show all locations for an error, do not truncate lists, etc.
+        showAll true
+        // Fallback lint configuration (default severities, etc.)
+        lintConfig file("default-lint.xml")
+        // if true, generate a text report of issues (false by default)
+        textReport true
+        // location to write the output; can be a file or 'stdout'
+        textOutput 'stdout'
+        // if true, generate an XML report for use by for example Jenkins
+        xmlReport true
+        // file to write report to (if not specified, defaults to lint-results.xml)
+        xmlOutput file("lint-report.xml")
+        // if true, generate an HTML report (with issue explanations, sourcecode, etc)
+        htmlReport false
+        // optional path to report (default will be lint-results.html in the builddir)
+        htmlOutput file("lint-report.html")
+    }
+}
+
+repositories {
+    jcenter()
+    maven { url "https://jitpack.io" }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    testCompile 'junit:junit:4.12'
+
+    compile 'com.android.support:appcompat-v7:25.0.0'
+    compile 'com.android.support:design:25.0.0'
+    compile 'com.android.support:support-v13:25.0.0'
+
+    compile 'com.github.bumptech.glide:glide:3.6.0'
+
+    compile 'net.cachapa.expandablelayout:expandablelayout:2.7'
+    compile 'com.github.aakira:expandable-layout:1.6.0@aar'
+    compile 'com.ms-square:expandableTextView:0.1.4'
+
+    compile 'com.squareup.retrofit2:retrofit:2.1.0'
+    compile 'com.google.code.gson:gson:2.6.2'
+    compile 'com.squareup.retrofit2:converter-gson:2.0.0-beta4'
+
+    compile 'com.github.esafirm.android-image-picker:imagepicker:1.7.2@aar'
+    // for experimental rx picker
+    compile 'com.github.esafirm.android-image-picker:rximagepicker:1.7.2@aar'
+}
+apply from: 'https://raw.githubusercontent.com/numetriclabz/jcenter/master/installv.gradle'
+apply from: 'https://raw.githubusercontent.com/numetriclabz/jcenter/master/bintrayv.gradle'

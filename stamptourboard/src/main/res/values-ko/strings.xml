@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">여행노트</string>
+
+    <string name="cancel">취소</string>
+    <string name="server_not_good">통신상태가 좋지 않습니다.</string>
+    <!-- board -->
+    <string name="postboard_container">여행후기</string>
+    <string name="postboardcomment_toolbar_title">댓글달기</string>
+    <string name="postwrite_toolbar_title">후기 작성하기</string>
+    <string name="write_btn">저장</string>
+    <string name="input_post_title">제목을 입력하세요</string>
+    <string name="input_post_contents">내용을 입력하세요</string>
+    <string name="select_photos">사진을 첨부해주세요.</string>
+    <string name="write_comments">댓글을 입력해주세요.</string>
+    <string name="postboard_write_success">게시물이 정상적으로 작성되었습니다.</string>
+    <string name="postboard_comments_write_complete">댓글 작성을 성공하였습니다.</string>
+    <string name="postboard_delete_success">게시물이 정상적으로 삭제되었습니다.</string>
+    <string name="postboard_deletecomment_success">댓글이 정상적으로 삭제되었습니다.</string>
+    <string name="views_format">조회 %d</string>
+
+    <!-- board confirm dialog -->
+    <string name="delete_dialog_title">삭제</string>
+    <string name="delete_dialog_content">게시물을 정말 삭제하시겠습니까?</string>
+    <string name="delete_dialog_commentcontent">댓글을 정말 삭제하시겠습니까?</string>
+    <string name="delete_dialog_yes">네</string>
+    <string name="delete_dialog_no">아니오</string>
+
+    <string name="not_enough_data">입력 정보가 유효하지 않습니다. 관리자에게 문의하세요.</string>
+    <string name="invalid_accesstoken">인증정보가 유효하지 않습니다. 재로그인 해주세요.</string>
+
+    <string name="share_title">공유하기</string>
+    <string name="share_string_text_postfix"> 에서 엄선한 명소를 방문해 보세요. 감동에 멋진 선물까지 더해집니다.</string>
+    <string name="share_string_text_prefix">[스탬프투어] </string>
+</resources>

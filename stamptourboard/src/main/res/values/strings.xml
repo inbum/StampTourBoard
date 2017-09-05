@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">StampTourBoard</string>
+
+    <string name="cancel">cancel</string>
+    <string name="server_not_good">The connection is not good.</string>
+    <!-- board -->
+    <string name="postboard_container">Travel Node</string>
+    <string name="postboardcomment_toolbar_title">Comment</string>
+    <string name="postwrite_toolbar_title">Note</string>
+    <string name="write_btn">Write</string>
+    <string name="input_post_title">Input title</string>
+    <string name="input_post_contents">Input contents</string>
+    <string name="select_photos">Attach photos</string>
+    <string name="write_comments">Input comments</string>
+    <string name="postboard_write_success">Write successful</string>
+    <string name="postboard_comments_write_complete">Write successful</string>
+    <string name="postboard_delete_success">Delete successful</string>
+    <string name="postboard_deletecomment_success">Delete comment successful</string>
+    <string name="views_format">views %d</string>
+
+    <!-- board confirm dialog -->
+    <string name="delete_dialog_title">Delete</string>
+    <string name="delete_dialog_content">Are you sure?</string>
+    <string name="delete_dialog_commentcontent">Are you sure?</string>
+    <string name="delete_dialog_yes">Yes</string>
+    <string name="delete_dialog_no">No</string>
+
+    <string name="not_enough_data">Not enough data</string>
+    <string name="invalid_accesstoken">Error validating access token:The session is invalid. Please re-login</string>
+
+    <string name="share_title">Share</string>
+    <string name="share_string_text_postfix"> city with stamp tour.</string>
+    <string name="share_string_text_prefix">[StampTour] You can experience best attractions of </string>
+
+</resources>

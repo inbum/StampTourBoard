@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorPrimary">#E91E63</color>
+    <color name="colorPrimaryDark">#C2185B</color>
+
+    <color name="stdColorWhite">#ffffff</color>
+    <color name="stdColorBlack">#313131</color>
+
+    <color name="line312">#D1D1D1</color>
+    <color name="stamp_list_item_text_color_alpha_on">#99ffffff</color>
+
+    <!-- post board -->
+    <color name="stdColorAlphaGrey">#33707070</color>
+    <color name="postBoardTextColor">#898989</color>
+    <color name="sc_count_color">#00a1e9</color>
+
+    <!-- Common usable Color Resource-->
+    <color name="common_bg_color1">#EFEFF4</color>
+
+</resources>
