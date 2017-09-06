@@ -1,14 +1,5 @@
 apply plugin: 'com.android.library'
 
-buildscript {
-    repositories {
-        mavenCentral()
-    }
-    dependencies {
-        classpath 'com.android.tools.build:gradle:1.1.0'
-    }
-}
-
 ext {
     bintrayRepo = 'maven' // your repo name
     bintrayName = 'stamptourboard' // has to be same as your library module name
@@ -18,7 +9,7 @@ ext {
     libraryDescription = 'Stamp Tour Board module'
     siteUrl = 'https://github.com/inbum/StampTourBoard'
     gitUrl = 'https://github.com/inbum/StampTourBoard.git'
-    libraryVersion = '1.0'
+    libraryVersion = '1.1'
     developerId = 'inbum'
     developerName = 'inbumo'
     developerEmail = 'inbum.o@gmail.com'
@@ -34,8 +25,8 @@ android {
     defaultConfig {
         minSdkVersion 16
         targetSdkVersion 24
-        versionCode 1
-        versionName "1.0"
+        versionCode 2
+        versionName "1.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

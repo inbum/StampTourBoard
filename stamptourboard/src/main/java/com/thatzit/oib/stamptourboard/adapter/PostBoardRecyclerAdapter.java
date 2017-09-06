@@ -1,6 +1,5 @@
 package com.thatzit.oib.stamptourboard.adapter;
 
-import android.app.ProgressDialog;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.DialogInterface;
@@ -11,7 +10,6 @@ import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Html;
-import android.util.Log;
 import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -24,7 +22,6 @@ import android.widget.Toast;
 
 import com.ms.square.android.expandabletextview.ExpandableTextView;
 import com.thatzit.oib.stamptourboard.R;
-import com.thatzit.oib.stamptourboard.StampTourBoardActivity;
 import com.thatzit.oib.stamptourboard.StampTourBoardCommentDetailActivity;
 import com.thatzit.oib.stamptourboard.StampTourBoardConfig;
 import com.thatzit.oib.stamptourboard.StampTourBoardDetailActivity;
@@ -33,6 +30,7 @@ import com.thatzit.oib.stamptourboard.http.retrofit.BoardApiPost;
 import com.thatzit.oib.stamptourboard.http.retrofit.ServiceGenerator;
 import com.thatzit.oib.stamptourboard.listeners.BoardListener;
 import com.thatzit.oib.stamptourboard.model.PostsRes;
+import com.thatzit.oib.stamptourboard.util.ProgressWaitDialog;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -49,7 +47,7 @@ public class PostBoardRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
     Context context;
     private BoardListener boardListener;
     private StampTourBoardConfig config;
-    private ProgressDialog progressDialog;
+    private ProgressWaitDialog progressWaitDialog;
     private final SparseBooleanArray mCollapsedStatus;
     private ArrayList<Object> mListData = new ArrayList<Object>();
     private PostBoardListItemImageAdapter postBoardListItemImageAdapter;
@@ -59,6 +57,7 @@ public class PostBoardRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
         this.boardListener = boardListener;
         this.config = config;
         mCollapsedStatus = new SparseBooleanArray();
+        progressWaitDialog = new ProgressWaitDialog(context);
     }
 
     public PostBoardRecyclerAdapter(Context context, StampTourBoardConfig config, BoardListener boardListener, ArrayList<Object> mListData) {
@@ -67,6 +66,7 @@ public class PostBoardRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
         this.config = config;
         mCollapsedStatus = new SparseBooleanArray();
         this.mListData = mListData;
+        progressWaitDialog = new ProgressWaitDialog(context);
     }
     public Object getmListData(int position) {
         return mListData.get(position);
@@ -147,11 +147,7 @@ public class PostBoardRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
 
                             dialog.dismiss();
 
-
-
-                            if ( progressDialog == null ) {
-                                progressDialog = ProgressDialog.show(context, "loading", "loading", true, true);
-                            }
+                            progressWaitDialog.show();
 
                             final BoardApiPost boardApiPost = ServiceGenerator.createBoardService(BoardApiPost.class);
 
@@ -163,8 +159,8 @@ public class PostBoardRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
                                 @Override
                                 public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
-                                    if ( progressDialog != null  ) {
-                                        progressDialog.dismiss();
+                                    if ( progressWaitDialog != null  ) {
+                                        progressWaitDialog.dismiss();
                                     }
 
                                     if ( response.isSuccessful() ){
@@ -186,8 +182,8 @@ public class PostBoardRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.
                                 @Override
                                 public void onFailure(Call<ResponseBody> call, Throwable t) {
 
-                                    if ( progressDialog != null  ) {
-                                        progressDialog.dismiss();
+                                    if ( progressWaitDialog != null  ) {
+                                        progressWaitDialog.dismiss();
                                     }
 
                                     Toast.makeText(context, R.string.server_not_good, Toast.LENGTH_SHORT).show();

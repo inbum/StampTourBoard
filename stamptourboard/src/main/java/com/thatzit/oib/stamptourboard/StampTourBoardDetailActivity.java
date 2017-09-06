@@ -28,6 +28,7 @@ import com.thatzit.oib.stamptourboard.http.retrofit.ServiceGenerator;
 import com.thatzit.oib.stamptourboard.listeners.BoardListener;
 import com.thatzit.oib.stamptourboard.model.CommentsModel;
 import com.thatzit.oib.stamptourboard.model.PostsRes;
+import com.thatzit.oib.stamptourboard.util.ProgressWaitDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -40,6 +41,7 @@ import retrofit2.Response;
 public class StampTourBoardDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
     private StampTourBoardConfig config;
+    private ProgressWaitDialog progressWaitDialog;
 
     BoardApiComment boardApiComment;
     BoardApiPost boardApiPost;
@@ -75,6 +77,8 @@ public class StampTourBoardDetailActivity extends AppCompatActivity implements V
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_postboarddetail);
 
+        progressWaitDialog = new ProgressWaitDialog(this);
+
         /* This should not happen */
         Intent intent = getIntent();
         if (intent == null || intent.getExtras() == null) {
@@ -93,6 +97,7 @@ public class StampTourBoardDetailActivity extends AppCompatActivity implements V
             Uri uri = intent.getData();
             String post_id = uri.getQueryParameter("post_id");
 
+            progressWaitDialog.show();
             boardApiPost = ServiceGenerator.createBoardService(BoardApiPost.class);
             Call<PostsRes.PostData> getPostCall = boardApiPost.getPost(
                     post_id
@@ -100,6 +105,10 @@ public class StampTourBoardDetailActivity extends AppCompatActivity implements V
             getPostCall.enqueue(new Callback<PostsRes.PostData>() {
                 @Override
                 public void onResponse(Call<PostsRes.PostData> call, Response<PostsRes.PostData> response) {
+
+                    if ( progressWaitDialog != null  ) {
+                        progressWaitDialog.dismiss();
+                    }
 
                     if ( response.isSuccessful() ){
                         //
@@ -117,6 +126,11 @@ public class StampTourBoardDetailActivity extends AppCompatActivity implements V
 
                 @Override
                 public void onFailure(Call<PostsRes.PostData> call, Throwable t) {
+
+                    if ( progressWaitDialog != null  ) {
+                        progressWaitDialog.dismiss();
+                    }
+
                     Toast.makeText(StampTourBoardDetailActivity.this, R.string.server_not_good, Toast.LENGTH_SHORT).show();
                 }
             });
@@ -272,6 +286,11 @@ public class StampTourBoardDetailActivity extends AppCompatActivity implements V
 
     public void getComments(){
 
+
+        if ( !progressWaitDialog.isShowing() ) {
+            progressWaitDialog.show();
+        }
+
         Call<List<CommentsModel>> getCommentsCall = boardApiComment.getComments(
                 postData.get_id()
         );
@@ -279,6 +298,9 @@ public class StampTourBoardDetailActivity extends AppCompatActivity implements V
             @Override
             public void onResponse(Call<List<CommentsModel>> call, Response<List<CommentsModel>> response) {
 
+                if ( progressWaitDialog != null  ) {
+                    progressWaitDialog.dismiss();
+                }
 
                 if ( response.isSuccessful() ){
                     //
@@ -313,6 +335,10 @@ public class StampTourBoardDetailActivity extends AppCompatActivity implements V
 
             @Override
             public void onFailure(Call<List<CommentsModel>> call, Throwable t) {
+
+                if ( progressWaitDialog != null  ) {
+                    progressWaitDialog.dismiss();
+                }
 
                 Toast.makeText(StampTourBoardDetailActivity.this, R.string.server_not_good, Toast.LENGTH_SHORT).show();
             }

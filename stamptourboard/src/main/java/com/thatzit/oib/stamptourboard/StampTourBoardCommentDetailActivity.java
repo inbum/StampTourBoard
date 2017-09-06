@@ -23,6 +23,7 @@ import com.thatzit.oib.stamptourboard.http.retrofit.ServiceGenerator;
 import com.thatzit.oib.stamptourboard.listeners.BoardListener;
 import com.thatzit.oib.stamptourboard.model.CommentsModel;
 import com.thatzit.oib.stamptourboard.model.PostsRes;
+import com.thatzit.oib.stamptourboard.util.ProgressWaitDialog;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +36,7 @@ import retrofit2.Response;
 public class StampTourBoardCommentDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
     private StampTourBoardConfig config;
+    private ProgressWaitDialog progressWaitDialog;
 
     BoardApiComment boardApiComment;
 
@@ -54,6 +56,7 @@ public class StampTourBoardCommentDetailActivity extends AppCompatActivity imple
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_postboardcommentdetail);
+        progressWaitDialog = new ProgressWaitDialog(this);
 
         /* This should not happen */
         Intent intent = getIntent();
@@ -68,7 +71,6 @@ public class StampTourBoardCommentDetailActivity extends AppCompatActivity imple
         boardApiComment = ServiceGenerator.createBoardService(BoardApiComment.class);
 
         setLayout(config);
-
         setData(config);
 
     }
@@ -148,10 +150,8 @@ public class StampTourBoardCommentDetailActivity extends AppCompatActivity imple
     }
 
     public void setData(StampTourBoardConfig config){
-
+        progressWaitDialog.show();
         getComments();
-        boardApiComment.getComments(postData.get_id());
-
     }
 
     public void getComments(){
@@ -163,6 +163,9 @@ public class StampTourBoardCommentDetailActivity extends AppCompatActivity imple
             @Override
             public void onResponse(Call<List<CommentsModel>> call, Response<List<CommentsModel>> response) {
 
+                if ( progressWaitDialog != null  ) {
+                    progressWaitDialog.dismiss();
+                }
 
                 if ( response.isSuccessful() ){
                     //
@@ -197,6 +200,11 @@ public class StampTourBoardCommentDetailActivity extends AppCompatActivity imple
 
             @Override
             public void onFailure(Call<List<CommentsModel>> call, Throwable t) {
+
+                if ( progressWaitDialog != null  ) {
+                    progressWaitDialog.dismiss();
+                }
+
                 Toast.makeText(StampTourBoardCommentDetailActivity.this, R.string.server_not_good, Toast.LENGTH_SHORT).show();
             }
         });

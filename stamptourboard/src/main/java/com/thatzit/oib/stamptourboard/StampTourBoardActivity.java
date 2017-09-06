@@ -1,6 +1,5 @@
 package com.thatzit.oib.stamptourboard;
 
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -15,11 +14,11 @@ import android.widget.Toast;
 
 import com.thatzit.oib.stamptourboard.adapter.PostBoardRecyclerAdapter;
 import com.thatzit.oib.stamptourboard.helper.Constants;
-import com.thatzit.oib.stamptourboard.helper.Utils;
 import com.thatzit.oib.stamptourboard.http.retrofit.BoardApiPost;
 import com.thatzit.oib.stamptourboard.http.retrofit.ServiceGenerator;
 import com.thatzit.oib.stamptourboard.listeners.BoardListener;
 import com.thatzit.oib.stamptourboard.model.PostsRes;
+import com.thatzit.oib.stamptourboard.util.ProgressWaitDialog;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -32,7 +31,7 @@ import retrofit2.Response;
 public class StampTourBoardActivity extends AppCompatActivity implements View.OnClickListener{
 
     private StampTourBoardConfig config;
-    private ProgressDialog progressDialog;
+    private ProgressWaitDialog progressWaitDialog;
     private ImageButton toolbar_btn_close;
     private RecyclerView recyclerView;
     private LinearLayoutManager linearLayoutManager;
@@ -48,6 +47,8 @@ public class StampTourBoardActivity extends AppCompatActivity implements View.On
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_postboard);
+
+        progressWaitDialog = new ProgressWaitDialog(this);
 
         /* This should not happen */
         Intent intent = getIntent();
@@ -114,9 +115,7 @@ public class StampTourBoardActivity extends AppCompatActivity implements View.On
 
     public void setItem(StampTourBoardConfig config){
 
-        if ( progressDialog == null ) {
-            progressDialog = ProgressDialog.show(StampTourBoardActivity.this, "loading", "loading", true, true);
-        }
+        progressWaitDialog.show();
         getPostData();
 
     }
@@ -132,8 +131,8 @@ public class StampTourBoardActivity extends AppCompatActivity implements View.On
             @Override
             public void onResponse(Call<PostsRes> call, Response<PostsRes> response) {
                 isLoading = false;
-                if ( progressDialog != null  ) {
-                    progressDialog.dismiss();
+                if ( progressWaitDialog != null  ) {
+                    progressWaitDialog.dismiss();
                 }
 
                 if ( response.isSuccessful() ){
@@ -172,8 +171,8 @@ public class StampTourBoardActivity extends AppCompatActivity implements View.On
             public void onFailure(Call<PostsRes> call, Throwable t) {
                 isLoading = false;
 
-                if ( progressDialog != null  ) {
-                    progressDialog.dismiss();
+                if ( progressWaitDialog != null  ) {
+                    progressWaitDialog.dismiss();
                 }
 
                 Toast.makeText(StampTourBoardActivity.this, R.string.server_not_good, Toast.LENGTH_SHORT).show();
@@ -223,4 +222,13 @@ public class StampTourBoardActivity extends AppCompatActivity implements View.On
         }
     };
 
+
+    @Override
+    protected void onDestroy() {
+        if ( progressWaitDialog != null ){
+            progressWaitDialog.dismiss();
+            progressWaitDialog = null;
+        }
+        super.onDestroy();
+    }
 }

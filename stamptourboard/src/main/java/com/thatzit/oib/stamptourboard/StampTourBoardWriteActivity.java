@@ -28,6 +28,7 @@ import com.thatzit.oib.stamptourboard.helper.Constants;
 import com.thatzit.oib.stamptourboard.helper.Utils;
 import com.thatzit.oib.stamptourboard.http.retrofit.BoardApiPost;
 import com.thatzit.oib.stamptourboard.http.retrofit.ServiceGenerator;
+import com.thatzit.oib.stamptourboard.util.ProgressWaitDialog;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -45,6 +46,7 @@ import retrofit2.Response;
 public class StampTourBoardWriteActivity extends AppCompatActivity implements View.OnClickListener {
 
     private StampTourBoardConfig config;
+    private ProgressWaitDialog progressWaitDialog;
 
     private Button toolbar_btn_cancel;
     private Button toolbar_btn_write;
@@ -72,6 +74,8 @@ public class StampTourBoardWriteActivity extends AppCompatActivity implements Vi
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_postwrite);
+
+        progressWaitDialog = new ProgressWaitDialog(this);
 
         /* This should not happen */
         Intent intent = getIntent();
@@ -258,6 +262,10 @@ public class StampTourBoardWriteActivity extends AppCompatActivity implements Vi
             return;
         }
 
+
+        progressWaitDialog.show();
+
+
         BoardApiPost boardApiPost = ServiceGenerator.createBoardService(BoardApiPost.class);
 
 
@@ -287,6 +295,9 @@ public class StampTourBoardWriteActivity extends AppCompatActivity implements Vi
             @Override
             public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
 
+                if ( progressWaitDialog != null  ) {
+                    progressWaitDialog.dismiss();
+                }
                 if ( response.isSuccessful() ){
                     //
                     //
@@ -316,6 +327,9 @@ public class StampTourBoardWriteActivity extends AppCompatActivity implements Vi
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
 
+                if ( progressWaitDialog != null  ) {
+                    progressWaitDialog.dismiss();
+                }
                 Toast.makeText(StampTourBoardWriteActivity.this, R.string.server_not_good, Toast.LENGTH_SHORT).show();
             }
         });
