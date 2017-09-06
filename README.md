@@ -1,7 +1,5 @@
 ## StampTour community
 
-## Download [![](https://jitpack.io/v/esafirm/android-image-picker.svg)](https://jitpack.io/#esafirm/android-image-picker)
-
 Add this to your project's `build.gradle`
 
 ```groovy
