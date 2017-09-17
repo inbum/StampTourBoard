@@ -18,8 +18,8 @@ public class MainActivity extends AppCompatActivity {
 
     private final String TEST_REGION = "보령시";
     private final String TEST_APPLICATIONID = "보령스탬프투어";
-    private final String TEST_NICK = "";
-    private final String TEST_ACCESSTOKEN = "";
+    private final String TEST_NICK = "댓츠잇";
+    private final String TEST_ACCESSTOKEN = "$2a$08$xjdFiN/zVgJJcCjwdRdq9.R/B9JRtOjm.B6uIBF6TkE7goOlmdLeO";
     private final String HINT_SELECTEDTOWNNAME="장소";
     private final String TEST_SHARE_PACKAGENAME = "com.thatzit.oib";
 
